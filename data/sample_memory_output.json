@@ -17,5 +17,8 @@
       "destination": "185.22.44.10",
       "suspicious": true
     }
-  ]
+  ],
+  "registry": {
+    "run_keys": []
+  }
 }
