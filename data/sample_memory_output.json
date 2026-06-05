@@ -1,0 +1,21 @@
+{
+  "processes": [
+    {
+      "name": "powershell.exe",
+      "pid": 4120,
+      "suspicious": true
+    },
+    {
+      "name": "explorer.exe",
+      "pid": 1020,
+      "suspicious": false
+    }
+  ],
+  "network_connections": [
+    {
+      "process": "powershell.exe",
+      "destination": "185.22.44.10",
+      "suspicious": true
+    }
+  ]
+}
