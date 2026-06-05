@@ -1,6 +1,7 @@
 
 === FINAL INVESTIGATION REPORT ===
 
-Finding: Suspicious process detected: powershell.exe
+Finding: Suspicious process detected: powershell.exe [NEEDS ADDITIONAL VALIDATION]
 Confidence: 0.75
 Verified: False
+Action: Additional analysis recommended
