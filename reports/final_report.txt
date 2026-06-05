@@ -1,0 +1,6 @@
+
+=== FINAL INVESTIGATION REPORT ===
+
+Finding: Suspicious process detected: powershell.exe
+Confidence: 0.75
+Verified: False

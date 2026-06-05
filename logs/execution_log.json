@@ -1,0 +1,58 @@
+[
+    {
+        "timestamp": "2026-06-05 18:36:10.994537",
+        "agent": "Planner Agent",
+        "action": "Generated investigation plan",
+        "result": [
+            "process_analysis",
+            "network_analysis",
+            "persistence_analysis"
+        ]
+    },
+    {
+        "timestamp": "2026-06-05 18:36:10.997736",
+        "agent": "Finding Agent",
+        "action": "Generated preliminary findings",
+        "result": [
+            {
+                "claim": "Suspicious process detected: powershell.exe",
+                "confidence": 0.85,
+                "verified": false
+            }
+        ]
+    },
+    {
+        "timestamp": "2026-06-05 18:36:11.033803",
+        "agent": "Verification Agent",
+        "action": "Verified findings against supporting evidence",
+        "result": [
+            {
+                "claim": "Suspicious process detected: powershell.exe",
+                "confidence": 0.75,
+                "verified": false,
+                "reason": "Weak supporting evidence"
+            }
+        ]
+    },
+    {
+        "timestamp": "2026-06-05 18:36:11.066668",
+        "agent": "Self-Correction Agent",
+        "action": "Applied confidence-based correction logic",
+        "result": [
+            {
+                "claim": "Suspicious process detected: powershell.exe",
+                "confidence": 0.75,
+                "verified": false,
+                "reason": "Weak supporting evidence",
+                "reanalysis_required": false,
+                "severity": "verified"
+            }
+        ]
+    },
+    {
+        "timestamp": "2026-06-05 18:36:11.096633",
+        "agent": "Report Agent",
+        "action": "Generated final investigation report",
+        "result": "\n=== FINAL INVESTIGATION REPORT ===\n\nFinding: Suspicious process detected: powershell.exe\nConfidence: 0.75\nVerified: False\n"
+    }
+]
