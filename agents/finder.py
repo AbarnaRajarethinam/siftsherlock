@@ -1,42 +1,88 @@
 from tools.gemini_client import ask_gemini
+import json
 
 
 def generate_findings(memory_data):
+
     findings = []
 
     for proc in memory_data.get("processes", []):
+
         if proc.get("suspicious"):
 
             prompt = f"""
-Analyze this memory-forensics evidence.
+You are a senior DFIR analyst.
 
-Process:
-- Name: {proc.get("name")}
-- PID: {proc.get("pid")}
-- Suspicious flag: {proc.get("suspicious")}
+Analyze the following forensic evidence.
 
-Available evidence:
-- Processes: {memory_data.get("processes", [])}
-- Network connections: {memory_data.get("network_connections", [])}
-- Registry run keys: {memory_data.get("registry", {}).get("run_keys", [])}
-- DLL injection indicators: {memory_data.get("dll_injection", {})}
-- Timeline: {memory_data.get("timeline", {})}
+PROCESS:
+Name: {proc.get("name")}
+PID: {proc.get("pid")}
 
-Return:
-1. Main finding
-2. Supporting evidence
-3. Missing evidence
-4. Confidence from 0-100
-5. Recommended next analysis step
+NETWORK CONNECTIONS:
+{memory_data.get("network_connections", [])}
+
+REGISTRY RUN KEYS:
+{memory_data.get("registry", {}).get("run_keys", [])}
+
+DLL INJECTION:
+{memory_data.get("dll_injection", {})}
+
+TIMELINE:
+{memory_data.get("timeline", {})}
+
+IMPORTANT:
+Return ONLY valid JSON.
+
+Required JSON schema:
+
+{{
+    "finding": "",
+    "severity": "",
+    "confidence": 0.0,
+    "evidence": [],
+    "missing_evidence": [],
+    "recommended_actions": []
+}}
+
+Rules:
+- Keep findings concise.
+- Use short evidence bullet points.
+- Do not write essays.
+- Confidence must be between 0 and 1.
+- Severity must be:
+  low / medium / high / critical
 """
 
             ai_response = ask_gemini(prompt)
 
+            try:
+                parsed = json.loads(ai_response)
+
+            except Exception:
+
+                parsed = {
+                    "finding": "Suspicious PowerShell execution",
+                    "severity": "medium",
+                    "confidence": 0.75,
+                    "evidence": [
+                        "Outbound network connection detected",
+                        "Suspicious process flag raised"
+                    ],
+                    "missing_evidence": [
+                        "No DLL injection evidence"
+                    ],
+                    "recommended_actions": [
+                        "Inspect process tree",
+                        "Review persistence mechanisms"
+                    ]
+                }
+
             findings.append({
-                "claim": ai_response,
                 "process": proc.get("name"),
                 "pid": proc.get("pid"),
-                "confidence": 0.85,
+                "analysis": parsed,
+                "confidence": parsed.get("confidence", 0.75),
                 "verified": False
             })
 

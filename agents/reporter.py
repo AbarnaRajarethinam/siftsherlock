@@ -2,15 +2,34 @@ def generate_report(findings):
 
     report = "\n=== FINAL INVESTIGATION REPORT ===\n"
 
-    for finding in findings:
+    for item in findings:
 
-        report += f"\nFinding: {finding['claim']}"
-        report += f"\nConfidence: {round(finding['confidence'],2)}"
-        report += f"\nVerified: {finding['verified']}"
+        analysis = item["analysis"]
 
-        if finding.get("reanalysis_required"):
-            report += "\nAction: Additional analysis recommended"
+        report += f"\nPROCESS: {item['process']} (PID: {item['pid']})\n"
+        report += f"Severity: {analysis['severity'].upper()}\n"
+        report += f"Confidence: {analysis['confidence']}\n"
+        report += f"Verified: {item['verified']}\n"
+        report += f"Validation Status: {item.get('severity', 'unknown')}\n"
 
-        report += "\n"
+        report += "\nFinding:\n"
+        report += f"- {analysis['finding']}\n"
+
+        report += "\nSupporting Evidence:\n"
+
+        for ev in analysis["evidence"]:
+            report += f"  • {ev}\n"
+
+        report += "\nMissing Evidence:\n"
+
+        for miss in analysis["missing_evidence"]:
+            report += f"  • {miss}\n"
+
+        report += "\nRecommended Actions:\n"
+
+        for action in analysis["recommended_actions"]:
+            report += f"  • {action}\n"
+
+        report += "\n----------------------------------------\n"
 
     return report

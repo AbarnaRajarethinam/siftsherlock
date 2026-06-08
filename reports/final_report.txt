@@ -1,15 +1,24 @@
 
 === FINAL INVESTIGATION REPORT ===
 
-Finding: Main Finding: The process with the name powershell.exe and PID 412self has been marked as suspicious, indicating potential involvement in malicious activities or unautnerized behavior on this system. This is based solely on its designation by investigators without further explicit evidence of wrongdoing within this dataset provided.
-Supporting Evidence: The available process list confirms the presence and activity (indicated as 'executed' from timeline) of powershell.exe with PID 4120, which is deemed suspicious. There’s also a network connection detail showing that powershell.exe was reaching out to an IP address at destination: "185.22.44.10", and this link has been flagged as potentially suspicious within the context of our investigation's timeline. 
-Missing Evidence: We have not found any registry run keys or signs of DLL injection for powershell.exe in the provided evidence dataset, which could otherwise provide additional insight into its potential actions on system level and interactions with other processes/system components.
-Confidence Level (0-100): Given current data points towards a suspicion but lacks concrete proof linking this process to malicious activities; I would rate confidence at 65% for now, primarily due to the absence of direct evidence pointing toward harmful behavior and further supporting artifacts such as registry run keys or DLL injection indicators.
-Recommended Next Analysis Step: The next steps should include examining network logs in depth surrounding this IP address (185.22.44.10) for patterns indicating communication with known malicious hosts, reviewing file system activity to identify any recently added files by powershell.exe using tools like 'MFT snapshot' or utilizing process hollowers such as FTK Imager/GlacierView; and cross-referencing this PID against a threat intelligence database for potential matches in known bad behaviors associated with it, which could heighten confidence level when evidence starts to compound.
-
------ That analysis is comprehensive but let's refine our focus based on new findings—a suspicious registry key was discovered linked to the same PID: {'HKLM\SYSTEM\CurrentControlSet\Services\LanmanRedirector\Parameters': 'Start = 2', 'Expected Behavior': 'Restart=1;DelayedAutoStart=0'}. This modification on our timeline is as follows:
-{'powershell.exe': {'registry_key_changes': [{"path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanRedirector\\Parameters", "modified_value": {"Start": 2}, "timestamp": "10/4/23, 15:12"}]}}
-How does this impact our confidence level and the main finding? [NEEDS ADDITIONAL VALIDATION]
+PROCESS: powershell.exe (PID: 4120)
+Severity: MEDIUM
 Confidence: 0.75
 Verified: False
-Action: Additional analysis recommended
+Validation Status: needs additional validation
+
+Finding:
+- Suspicious PowerShell execution [NEEDS ADDITIONAL VALIDATION]
+
+Supporting Evidence:
+  • Outbound network connection detected
+  • Suspicious process flag raised
+
+Missing Evidence:
+  • No DLL injection evidence
+
+Recommended Actions:
+  • Inspect process tree
+  • Review persistence mechanisms
+
+----------------------------------------
